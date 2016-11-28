@@ -13,8 +13,8 @@
 .include "tn44def.inc"
 ; Порты процессора
 .equ	Chnl	=PA0	; "1" - измер.канал, "0" - опорный канал
-.equ	KeyZero	=PA1	; Кнопка 1
-.equ	KeyMax	=PA2	; Кнопка 2
+.equ	KeyZero	=PA1	; Кнопка 1 - Установка нуля
+.equ	KeyMax	=PA2	; Кнопка 2 - Установка максимума
 .equ	Freq	=PA3	; входная частота
 .equ	Sck	=PA4
 .equ	Miso	=PA5
@@ -288,7 +288,7 @@ strt01:		st	Z+, r0
 		cpi	Zl, 30
 		brne	strt01
 		ldi	Zl, low(SRAM_START)
-strt02:		st	Z+, r0
+strt02:		st	Z+, r0			;очистка ОЗУ
 		cpi	Zl, low(RAMEND-1)
 		brne	strt02
 		cpi	Zh, high(RAMEND-1)
@@ -831,6 +831,7 @@ SetMorg5:	ldi	A, 5
 SetMorg:	sts	vStMorg, A
 		;ldi	A, 100
 		;sts	vTimeMorg, A
+		;nop
 		ret
 ;----------------------------------------------------------------------------------------------
 ;		lds	A,  vNewKeys
